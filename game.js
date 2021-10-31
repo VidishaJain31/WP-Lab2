@@ -213,7 +213,6 @@ function isHit(defender, offender) {
         if(isNaN(thisDuration) == false){
             lastStingTime = newStingTime; 
             let longestDuration = Number(duration.innerHTML); 
-            console.log("ld  ",longestDuration);
             if (longestDuration === 0) { 
                 longestDuration = thisDuration;
             } 
