@@ -167,12 +167,28 @@ function makeBees() {
     } 
     //create bees 
     let i = 1; 
+    // while (i <= nbBees) {
+    //     var num = i; 
+    //     var bee = new Bee(num); //create object and its IMG element 
+    //     bee.display(); //display the bee 
+    //     bees.push(bee); //add the bee object to the bees array 
+    //     i++; 
+    // } 
     while (i <= nbBees) {
         var num = i; 
-        var bee = new Bee(num); //create object and its IMG element 
-        bee.display(); //display the bee 
-        bees.push(bee); //add the bee object to the bees array 
+        if(bees.length < nbBees){
+            var bee = new Bee(num); //create object and its IMG element 
+            bee.display(); //display the bee 
+            bees.push(bee); //add the bee object to the bees array 
+        }
         i++; 
+        if(bees.length>nbBees){
+            alert("Please enter a higher value than the number of bees already there.");
+        }
+        if(bees.length == nbBees){
+            break;
+        }
+        
     } 
 }
 function moveBees() { 
@@ -247,4 +263,11 @@ function overlap(element1, element2) {
         return false; 
     } 
     return true; 
+}
+
+function addBee(){
+    var bee = new Bee((bees.length+1));
+    bee.display();
+    bees.push(bee);
+
 }
