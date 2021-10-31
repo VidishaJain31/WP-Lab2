@@ -51,6 +51,11 @@ function start() {
     //create bees 
     makeBees();
     updateBees();
+    //take start time
+    
+    document.addEventListener("keydown",()=>{
+        lastStingTime = new Date();
+    });
 }
 
 
@@ -151,12 +156,6 @@ function getRandomInt(max){
     return (Math.random() * max);
 }
 
-// document.getElementById("nbBees").addEventListener('change',(e)=>{
-
-//     var val = e.target.value;
-//     makeBees();
-// })
-
 function makeBees() { 
     //get number of bees specified by the user 
     let nbBees = document.getElementById("nbBees").value;
@@ -194,13 +193,13 @@ function updateBees() {
     moveBees(); 
     //use a fixed update period 
     let period = document.getElementById("periodTimer").value;//modify this to control refresh period 
-    console.log(period);
     //update the timer for the next move 
     updateTimer = setTimeout('updateBees()', period);
-    // if(updateTimer == 1000){
-    //     alert("heyy");
-    //     clearTimeout(updateTimer);
-    // } 
+    let hts = document.getElementById("hits").textContent;
+    if(hts == 1000){
+        alert("Game Over");
+        clearTimeout(updateTimer);
+    } 
 }
 
 function isHit(defender, offender) { 
@@ -209,6 +208,21 @@ function isHit(defender, offender) {
         let score = hits.innerHTML; 
         score = Number(score) + 1; //increment the score 
         hits.innerHTML = score; //display the new score 
+        let newStingTime = new Date(); 
+        let thisDuration = newStingTime - lastStingTime;  
+        if(isNaN(thisDuration) == false){
+            lastStingTime = newStingTime; 
+            let longestDuration = Number(duration.innerHTML); 
+            console.log("ld  ",longestDuration);
+            if (longestDuration === 0) { 
+                longestDuration = thisDuration;
+            } 
+            else { 
+                if (longestDuration < thisDuration)
+                    longestDuration = thisDuration; 
+            }
+            document.getElementById("duration").innerHTML = longestDuration;
+        }
         
     } 
 }
