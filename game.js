@@ -52,9 +52,13 @@ function start() {
     makeBees();
     updateBees();
     //take start time
-    
+    temp =1;
     document.addEventListener("keydown",()=>{
-        lastStingTime = new Date();
+        if(temp == 1){
+            lastStingTime = new Date();
+            temp = 0;
+        }
+        
     });
 }
 
