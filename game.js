@@ -12,7 +12,20 @@ function Bear() {
         this.display(); 
     }; 
     this.display = function() { 
-        this.htmlElement.style.left = this.x + "px"; 
+        if(this.x < 0){
+            this.x = 0;
+        }
+        else if(this.x>1100){
+            this.x = 1100;
+        }
+        if(this.y < 0){
+            this.y = 0;
+        }
+        else if(this.y>400){
+            this.y = 400;
+        }
+        // console.log("hey", this.y);
+        this.htmlElement.style.left = this.x + "px";
         this.htmlElement.style.top = this.y + "px"; 
         this.htmlElement.style.display = "block"; 
     }; 
