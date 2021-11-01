@@ -281,19 +281,3 @@ function addBee(){
     bees.push(bee);
 
 }
-
-function restart(){
-    //getting the values
-    document.getElementById("hits").textContent = 0;
-    document.getElementById("duration").innerHTML = 0;
-    // removing the html elements by accessing them 
-    for(i=0; i<bees.length;i++){
-        bees[i].htmlElement.remove();
-    }
-    // emptying the array
-    bees = [];
-    //clears the timer
-    clearTimeout(updateTimer);
-    // calling the start function
-    start();
-}
