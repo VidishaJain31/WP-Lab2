@@ -12,6 +12,7 @@ function Bear() {
         this.display(); 
     }; 
     this.display = function() { 
+        //adding fitbounds function so that the bear doesn't go out of the board
         this.fitBounds();
         this.htmlElement.style.left = this.x + "px";
         this.htmlElement.style.top = this.y + "px"; 
@@ -179,13 +180,14 @@ function makeBees() {
     let i = 1; 
     while (i <= nbBees) {
         var num = i; 
-        // the number of bees
+        // if the length of bees is less than the number of bees inputed then create bees
         if(bees.length < nbBees){
             var bee = new Bee(num); //create object and its IMG element 
             bee.display(); //display the bee 
             bees.push(bee); //add the bee object to the bees array 
         }
         i++; 
+        // if less bees are inputed that what is already there then give alert
         if(bees.length>nbBees){
             alert("Please enter a higher value than the number of bees already there.");
             break;
@@ -216,7 +218,9 @@ function updateBees() {
     let period = document.getElementById("periodTimer").value;//modify this to control refresh period 
     //update the timer for the next move 
     updateTimer = setTimeout('updateBees()', period);
+    //getting the number of hits
     let hts = document.getElementById("hits").textContent;
+    //if the number f hits is equals to 1000 then clear the timer and give alert 
     if(hts == 1000){
         alert("Game Over");
         clearTimeout(updateTimer);
@@ -231,6 +235,7 @@ function isHit(defender, offender) {
         hits.innerHTML = score; //display the new score 
         let newStingTime = new Date(); 
         let thisDuration = newStingTime - lastStingTime;  
+        // if the value in thisDuration variable is a number only then
         if(isNaN(thisDuration) == false){
             lastStingTime = newStingTime; 
             let longestDuration = Number(duration.innerHTML); 
@@ -269,20 +274,26 @@ function overlap(element1, element2) {
     } 
     return true; 
 }
-
+//creating a new bee and adding it in the array  
 function addBee(){
     var bee = new Bee((bees.length+1));
     bee.display();
     bees.push(bee);
 
 }
+
 function restart(){
+    //getting the values
     document.getElementById("hits").textContent = 0;
     document.getElementById("duration").innerHTML = 0;
+    // removing the html elements by accessing them 
     for(i=0; i<bees.length;i++){
         bees[i].htmlElement.remove();
     }
+    // emptying the array
     bees = [];
+    //clears the timer
     clearTimeout(updateTimer);
+    // calling the start function
     start();
 }
