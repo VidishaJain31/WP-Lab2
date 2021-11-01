@@ -12,19 +12,7 @@ function Bear() {
         this.display(); 
     }; 
     this.display = function() { 
-        if(this.x < 0){
-            this.x = 0;
-        }
-        else if(this.x>1100){
-            this.x = 1100;
-        }
-        if(this.y < 0){
-            this.y = 0;
-        }
-        else if(this.y>400){
-            this.y = 400;
-        }
-        // console.log("hey", this.y);
+        this.fitBounds();
         this.htmlElement.style.left = this.x + "px";
         this.htmlElement.style.top = this.y + "px"; 
         this.htmlElement.style.display = "block"; 
@@ -46,6 +34,7 @@ function Bear() {
         if (this.y > h - ih)
             this.y = h - ih; 
     };
+    //this is setting the speed of the bear
     this.setSpeed = function(val) { 
         this.dBear = val;
     }; 
@@ -55,6 +44,7 @@ function start() {
     bear = new Bear();
     // Add an event listener to the keypress event. 
     document.addEventListener("keydown", moveBear, false);
+    // if the value is changed the get the value and pass it to the setSpeed function
     document.getElementById("bearSpeed").addEventListener('change',(e)=>{
         var val = e.target.value;
         bear.setSpeed(val);
@@ -64,10 +54,12 @@ function start() {
     //create bees 
     makeBees();
     updateBees();
-    //take start time
+    
     temp =1;
+    //adding event listener so that the time is only taken when the bear moves atleast ones
     document.addEventListener("keydown",()=>{
         if(temp == 1){
+            //take start time
             lastStingTime = new Date();
             temp = 0;
         }
@@ -169,6 +161,7 @@ function createBeeImg(wNum) {
     //return the img object 
     return img;
 }
+//making a function for generating the random value between 0 and the value stored in the variable max
 function getRandomInt(max){
     return (Math.random() * max);
 }
@@ -186,6 +179,7 @@ function makeBees() {
     let i = 1; 
     while (i <= nbBees) {
         var num = i; 
+        // the number of bees
         if(bees.length < nbBees){
             var bee = new Bee(num); //create object and its IMG element 
             bee.display(); //display the bee 
@@ -194,6 +188,7 @@ function makeBees() {
         i++; 
         if(bees.length>nbBees){
             alert("Please enter a higher value than the number of bees already there.");
+            break;
         }
         if(bees.length == nbBees){
             break;
@@ -280,4 +275,14 @@ function addBee(){
     bee.display();
     bees.push(bee);
 
+}
+function restart(){
+    document.getElementById("hits").textContent = 0;
+    document.getElementById("duration").innerHTML = 0;
+    for(i=0; i<bees.length;i++){
+        bees[i].htmlElement.remove();
+    }
+    bees = [];
+    clearTimeout(updateTimer);
+    start();
 }
